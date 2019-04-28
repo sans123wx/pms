@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}信息记录{% endblock %}
+
+{%  block head%}
+<link rel="stylesheet" href="{%static 'css/dataTables.bootstrap.min.css'%}">
+<style>
+    body {
+        font-family: 宋体
+    }
+    th {
+        min-width: 90px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container table-responsive">
+    <h1 style="text-align:center">密码管理</h1>
+    <form action="#" method="POST">
+        {% csrf_token %}
+        <input type="password" name="pw" placeholder="请输入密匙">
+        <input type="submit" class="btn btn-default" value="查看详细信息">
+    </form>
+    <table class="table table-striped" id='table'>
+        <thead>
+            <tr>
+                <th>名称</th>
+                <th>用户名</th>
+                <th>IP地址</th>
+                <th>最后修改时间</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.title }}</td>
+                <td>{{ record.username }}</td>
+                <td>{{ record.ip }}</td>
+                <td>{{ record.update_time|date:"Y/m/d" }} {{ col.update_time|time:"H:i" }}</td>
+            </tr>
+            {% empty %}
+            <p>没有密码</p>
+            {% endfor %}
+        </tbody>
+        
+    </table>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="{%static 'js/jquery.dataTables.min.js'%}"></script>
+<script src="{%static 'js/dataTables.bootstrap.min.js'%}"></script>
+<script>
+$(function () {
+    $('#table').DataTable({
+      'paging'      : false,
+      'lengthChange': false,
+      'searching'   : true,
+      'ordering'    : false,
+      'info'        : false,
+      'autoWidth'   : true,
+    })
+})
+</script>
+
+{% endblock %}
