@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+    body {
+        font-family: 宋体;
+    }
+    h1 {
+        text-align: center;
+        padding: 5px 0;
+        margin-bottom: 15px;
+    }
+    .container {
+        max-width: 700px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>新建密码管理项目</h1>
+    <form action="{% url 'create_record' %}" class="form-horizontal" method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group clearfix">
+            <label for="{{ field.id_for_label }}" class="col-sm-2 control-label">{{ field.label }}</label>
+            <div class="col-sm-7">
+                {{ field }}
+            </div>
+        </div>
+        <p style="text-align:center">{{ field.errors.as_text }}</p>
+        {% empty %}
+        <p>没有内容</p>
+        {% endfor %}
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-7">
+                <input class="btn btn-primary" type="submit" value="提交">
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
