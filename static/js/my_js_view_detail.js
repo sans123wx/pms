@@ -14,28 +14,18 @@ $(function () {
 $('#myModal').on('show.bs.modal' , function(e){
     var button = $(e.relatedTarget)
     if(button.attr('name') == 'edit'){      
-        $("button[name='submit']").attr('id' , 'edit')
         var item_id = button.data('id')
-        $.ajax({
-            url:'/upload/edit_sec',
-            type: 'get',
-            data: {'item_id':item_id,key:'key'},
-            success: function(data){
-                $('.modal-body').html(data)
-                $('#id_title').val($(button).parent().prevAll().filter("[name='title']").text())
-                $('#id_ip').val($(button).parent().prevAll().filter("[name='ip']").text())
-                $('#id_sec').val($(button).parent().prevAll().filter("[name='sec']").text())
-                $('#id_app_user_name').val($(button).parent().prevAll().filter("[name='app_user_name']").text())
-                $('#id_app_sec').val($(button).parent().prevAll().filter("[name='app_sec']").text())
-            }
-        })
-    }
+        $('.modal-title').text('修改记录')
+        $('.modal-body').html('<p>请输入密匙</p><input type="password" name="key"><input hidden name="item_id" value="' + item_id + '">')
+        $('form').attr('action' , '/edit_record')
+        $('form').attr('method' , 'GET')
+        }
     if(button.attr('name') == 'delete'){
         var item_id = button.data('id')
-        $("button[name='submit']").attr('id' , 'delete')
-        $("button[name='submit']").data('id' , item_id)
         $('.modal-title').text('删除记录')
-        $('.modal-body').text('确定删除记录吗?')
+        $('.modal-body').html('<p>请输入密匙</p><input type="password" name="key"><input hidden name="item_id" value="' + item_id + '">')
+        $('form').attr('action' , '/delete_record')
+        $('form').attr('method' , 'POST')
         
     }
 })

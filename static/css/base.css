@@ -1,0 +1,16 @@
+body {
+    font-family: "Helvetica Neue",Helvetica,"Microsoft YaHei",Arial,sans-serif;
+}
+.navbar {
+    background: #fff;
+    border: 0px;
+    margin-bottom: 70px;
+    border-bottom: 1px solid #eee;
+  }
+  .navbar .navbar-collapse .navbar-nav li a {
+    color: #444
+  }
+  .navbar .navbar-header .navbar-brand img {
+    width: 100%;
+    max-width: 130px;
+  }

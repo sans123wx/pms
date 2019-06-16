@@ -118,8 +118,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-ENCRYPTED_KEY = 'pbkdf2_sha256$120000$PX3dwkJgcJeL$nV9aASPoDiN8Ss2VhmqK1Scku8n3NTZQNRkyJmQF4FQ='
-
+ENCRYPTED_KEY = 'pbkdf2_sha256$150000$F1D9B1yCWFaP$AfiKOImSH07NBCPifiWEqK6cs7Ipuk98YwUK/NXPuhU='
+#nffy123
+LOGIN_URL = '/admin'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR , 'static') ,

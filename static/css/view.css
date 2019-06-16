@@ -1,0 +1,16 @@
+
+
+th {
+    min-width: 90px;
+    font-weight: 550;
+}
+
+@media screen and (max-width: 767px) {
+    .table-responsive {
+        border: 0px
+    }
+}
+
+.uni {
+    color: #888;
+}

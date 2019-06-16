@@ -6,21 +6,12 @@
 
 {%  block head%}
 <link rel="stylesheet" href="{%static 'css/dataTables.bootstrap.min.css'%}">
-<style>
-    body {
-        font-family: 宋体
-    }
-    th {
-        min-width: 90px;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/view.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="container table-responsive">
-    <h1 style="text-align:center">密码管理</h1>
-    <button class="btn btn-default" href="{% url 'create_record' %}" name="create">新建项目</button>
-    <table class="table table-striped" id='table'>
+    <table class="table table-bordered" id='table'>
         <thead>
             <tr>
                 <th>名称</th>
@@ -41,7 +32,7 @@
                 <td name='ip'>{{ record.ip }}</td>
                 <td name='username'>{{ record.username | decrypt_tag:key}}</td>
                 <td name='pw'>{{ record.pw | decrypt_tag:key}}</td>
-                <td name='app_username'>{{ record.app_user_name | decrypt_tag:key}}</td>
+                <td name='app_username'>{{ record.app_username | decrypt_tag:key}}</td>
                 <td name='app_pw'>{{ record.app_pw | decrypt_tag:key }}</td>
                 <td>{{ record.update_time|date:"Y/m/d" }} {{ record.update_time|time:"H:i" }}</td>
                 <td>{{ record.note }}</td>
@@ -68,17 +59,20 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">修改记录信息</h4>
         </div>
+        <form method="POST">
+            {% csrf_token %}
         <div class="modal-body">
          ...
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-          <button type="button" class="btn btn-primary" name="submit">确定</button>
+          <button type="submit" class="btn btn-primary" name="submit">确定</button>
         </div>
+        </form>
       </div>
     </div>
   </div>
-  {% csrf_token %}
+  
 {% endblock %}
 
 {% block script %}

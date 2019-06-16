@@ -1,0 +1,12 @@
+.container {
+    text-align: center
+}
+.content {
+    margin: 0 auto;
+    max-width: 600px;
+}
+h2 {
+    font-size: 25px;
+    font-weight: 330;
+    padding-bottom: 10px;
+}

@@ -12,6 +12,7 @@ class RecordForm(forms.Form):
     pw = forms.CharField(label = '密码' , widget = forms.PasswordInput(attrs = {'class':'form-control'}))
     app_username = forms.CharField(label = '应用登录名' , widget = forms.TextInput(attrs = {'class':'form-control'}))
     app_pw = forms.CharField(label = '应用登录密码' , widget = forms.PasswordInput(attrs = {'class':'form-control'}))
+    note = forms.CharField(label = '备注' , widget = forms.TextInput(attrs = {'class':'form-control'}))
 
     def clean_key(self):
         key = self.cleaned_data['key']
@@ -42,7 +43,7 @@ class RecordForm(forms.Form):
             encrypted_pw = encrypt(pw , key)
             return encrypted_pw
     
-    def clean_app_usename(self):
+    def clean_app_username(self):
         key = self.cleaned_data.get('key')
         if key:
             app_username = self.cleaned_data.get('app_username')
