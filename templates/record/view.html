@@ -44,12 +44,19 @@
 <script>
 $(function () {
     $('#table').DataTable({
-      'paging'      : false,
+        language: {
+            search: "搜索:",
+            "oPaginate": {
+                "sPrevious": "上一页",
+                "sNext": "下一页",
+            },
+        },
+      'paging'      : true,
       'lengthChange': false,
       'searching'   : true,
       'ordering'    : false,
       'info'        : false,
-      'autoWidth'   : true,
+      'iDisplayLength': 5,
     })
 })
 </script>

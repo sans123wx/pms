@@ -1,0 +1,18 @@
+body {
+    background: #eee;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+form .panel {
+    width: 400px;
+    background: #fff;
+}
+.panel .panel-heading h3{
+    text-align: center;
+}

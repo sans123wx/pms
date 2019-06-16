@@ -27,15 +27,15 @@
         </thead>
         <tbody>
             {% for record in records %}
-            <tr>
-                <td name='title'>{{ record.title }}</td>
-                <td name='ip'>{{ record.ip }}</td>
-                <td name='username'>{{ record.username | decrypt_tag:key}}</td>
-                <td name='pw'>{{ record.pw | decrypt_tag:key}}</td>
-                <td name='app_username'>{{ record.app_username | decrypt_tag:key}}</td>
-                <td name='app_pw'>{{ record.app_pw | decrypt_tag:key }}</td>
+            <tr id={{ record.id }}>
+                <td class='title'>{{ record.title }}</td>
+                <td class='ip'>{{ record.ip }}</td>
+                <td class='username'>{{ record.username | decrypt_tag:key}}</td>
+                <td class='pw'>{{ record.pw | decrypt_tag:key}}</td>
+                <td class='app_username'>{{ record.app_username | decrypt_tag:key}}</td>
+                <td class='app_pw'>{{ record.app_pw | decrypt_tag:key }}</td>
                 <td>{{ record.update_time|date:"Y/m/d" }} {{ record.update_time|time:"H:i" }}</td>
-                <td>{{ record.note }}</td>
+                <td class='note'>{{ record.note }}</td>
                 <td>
                     <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" type="button" data-id="{{ record.id }}" name="edit">
                         <span class="glyphicon glyphicon-pencil"></span>
@@ -52,14 +52,14 @@
     </table>
 </div>
 <!-- 弹框 -->
-<div class="modal fade" id="myModal" tabindex="-1">
+<!-- <div class="modal fade" id="myModal" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">修改记录信息</h4>
         </div>
-        <form method="POST">
+        <form method="POST" class="form-horizontal">
             {% csrf_token %}
         <div class="modal-body">
          ...
@@ -71,7 +71,7 @@
         </form>
       </div>
     </div>
-  </div>
+  </div> -->
   
 {% endblock %}
 

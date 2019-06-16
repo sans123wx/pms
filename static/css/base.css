@@ -11,6 +11,12 @@ body {
     color: #444
   }
   .navbar .navbar-header .navbar-brand img {
-    width: 100%;
+    /* width: 100%; */
     max-width: 130px;
+    position: absolute;
+    top: 6px;
+    left:5px;
+  }
+  .navbar-brand {
+    position: relative;
   }

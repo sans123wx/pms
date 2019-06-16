@@ -18,22 +18,19 @@ def view(request):
     return render(request , 'record/view.html' , context)
 
 @login_required
-# @require_POST
+@require_POST
 def view_detail(request):
-    records = get_list_or_404(Record)
-    context = {}
-    context['records'] = records
-    context['key'] = 'nffy123'
-    return render(request , 'record/view_detail.html' , context)
-    # key = request.POST.get('key')
-    # if check_password(key , settings.ENCRYPTED_KEY):
-    #     records = get_list_or_404(Record)
-    #     context = {}
-    #     context['records'] = records
-    #     context['key'] = key
-    #     return render(request , 'record/view_detail.html' , context)
-    # else:
-    #     raise Http404('密匙错误')
+    key = request.POST.get('key')
+    if check_password(key , settings.ENCRYPTED_KEY):
+        records = get_list_or_404(Record)
+        context = {}
+        context['records'] = records
+        context['key'] = key
+        return render(request , 'record/view_detail.html' , context)
+    else:
+        context = {}
+        context['info'] = '密匙错误'
+        return render(request , 'record/success.html' , context)
 
 @login_required
 def create_record(request):
@@ -50,7 +47,7 @@ def create_record(request):
                                   created_user = request.user,
                                   update_user = request.user
                                   )
-            return render(request , 'record/success.html')
+            return render(request , 'record/success.html' , {'info':'创建成功'})
     else:
         form = RecordForm()
     context = {}
@@ -72,29 +69,27 @@ def delete_record(request):
     return render(request , 'record/success.html' , context)
 
 @login_required
+@require_POST
 def edit_record(request):
+    context = {}
     if request.method == 'POST':
-        pass
-    else:
-        key = request.GET.get('key')
-        context = {}
-        if check_password(key , settings.ENCRYPTED_KEY):
-            item_id = request.GET.get('item_id')
+        form = RecordForm(request.POST)
+        print(request.POST)
+        if form.is_valid():   
+            item_id = request.POST.get('item_id')
             record = get_object_or_404(Record , id = item_id)
-            data = {
-                'key':key,
-                'title':record.title,
-                'ip':record.ip,
-                'username':record.username,
-                'pw':record.pw,
-                'app_username':record.app_username,
-                'app_pw':record.app_pw,
-                'note':record.note,
-            }
-            form = RecordForm(initial=data)
-            context['form'] = form
-            return render(request , 'record/create_record.html' , context)
-
+            record.title = form.cleaned_data['title']
+            record.ip = form.cleaned_data['ip']
+            record.username = form.cleaned_data['username']
+            record.pw = form.cleaned_data['pw']
+            record.app_username = form.cleaned_data['app_username']
+            record.app_pw = form.cleaned_data['app_pw']
+            record.note = form.cleaned_data['note']
+            record.save()
+            context['info'] = '修改成功'
         else:
-            context['info'] = '密匙错误'
-            return render(request , 'record/success.html' , context)
+            context['info'] = '发生错误，请检查密匙是否正确'
+
+    else:
+        context['info'] = '非法访问'
+    return render(request , 'record/success.html' , context)

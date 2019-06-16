@@ -25,7 +25,7 @@ SECRET_KEY = 'nth!@v%^k)5&@^q8*#$-bs4$*59*_of2+*(n4mnijq4u01l%wh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'record',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -120,7 +121,7 @@ USE_TZ = True
 
 ENCRYPTED_KEY = 'pbkdf2_sha256$150000$F1D9B1yCWFaP$AfiKOImSH07NBCPifiWEqK6cs7Ipuk98YwUK/NXPuhU='
 #nffy123
-LOGIN_URL = '/admin'
+LOGIN_URL = '/account/login'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR , 'static') ,
