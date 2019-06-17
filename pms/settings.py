@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'nth!@v%^k)5&@^q8*#$-bs4$*59*_of2+*(n4mnijq4u01l%wh'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -74,11 +74,19 @@ WSGI_APPLICATION = 'pms.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
+DATABASE_PASSWORD = os.environ['DATABASE_PASSWORD']
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'pms_db',
+        'USER': 'pms',
+        'PASSWORD': DATABASE_PASSWORD,
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -120,9 +128,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 ENCRYPTED_KEY = 'pbkdf2_sha256$150000$F1D9B1yCWFaP$AfiKOImSH07NBCPifiWEqK6cs7Ipuk98YwUK/NXPuhU='
-#nffy123
 LOGIN_URL = '/account/login'
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR , 'static_collected')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR , 'static') ,
 )
