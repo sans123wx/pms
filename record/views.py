@@ -7,6 +7,7 @@ from django.contrib.auth.hashers import check_password
 from django.conf import settings
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse , Http404
+from account.forms import CaptchaForm
 
 # Create your views here.
 
@@ -20,17 +21,20 @@ def view(request):
 @login_required
 @require_POST
 def view_detail(request):
-    key = request.POST.get('key')
-    if check_password(key , settings.ENCRYPTED_KEY):
-        records = get_list_or_404(Record)
-        context = {}
-        context['records'] = records
-        context['key'] = key
-        return render(request , 'record/view_detail.html' , context)
+    context = {}
+    form = CaptchaForm(request.POST)
+    if form.is_valid():
+        key = request.POST.get('key')
+        if check_password(key , settings.ENCRYPTED_KEY):
+            records = get_list_or_404(Record)
+            context['records'] = records
+            context['key'] = key
+            return render(request , 'record/view_detail.html' , context)
+        else:
+            context['info'] = '密匙错误'
     else:
-        context = {}
-        context['info'] = '密匙错误'
-        return render(request , 'record/success.html' , context)
+        context['info'] = '验证码错误'
+    return render(request , 'record/success.html' , context)
 
 @login_required
 def create_record(request):
@@ -74,7 +78,6 @@ def edit_record(request):
     context = {}
     if request.method == 'POST':
         form = RecordForm(request.POST)
-        print(request.POST)
         if form.is_valid():   
             item_id = request.POST.get('item_id')
             record = get_object_or_404(Record , id = item_id)
@@ -93,3 +96,4 @@ def edit_record(request):
     else:
         context['info'] = '非法访问'
     return render(request , 'record/success.html' , context)
+

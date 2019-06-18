@@ -3,6 +3,7 @@ from django.contrib.auth.hashers import check_password
 from .models import *
 from django.conf import settings
 from .fnc import encrypt
+from captcha.fields import CaptchaField
 
 class RecordForm(forms.Form):
     key = forms.CharField(label = '密匙' , widget = forms.PasswordInput(attrs = {'class':'form-control'}))
@@ -13,6 +14,7 @@ class RecordForm(forms.Form):
     app_username = forms.CharField(label = '应用登录名' , widget = forms.TextInput(attrs = {'class':'form-control'}) , required = False)
     app_pw = forms.CharField(label = '应用登录密码' , widget = forms.PasswordInput(attrs = {'class':'form-control'}) , required = False)
     note = forms.CharField(label = '备注' , widget = forms.TextInput(attrs = {'class':'form-control'}) , required = False)
+    captcha = CaptchaField()
 
     def clean_key(self):
         key = self.cleaned_data['key']

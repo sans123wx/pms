@@ -12,13 +12,23 @@
             <form action="{% url 'create_record' %}" class="form-horizontal" method="POST">
                 {% csrf_token %}
                 {% for field in form %}
-                <div class="form-group clearfix">
+                {% if field.label == 'Captcha' %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}" class="col-sm-2 control-label">验证码</label>
+                    <div class="col-sm-7" style="text-align: left">
+                        {{ field }}
+                    </div>
+                </div>
+                <p style="text-align:center">{{ field.errors.as_text }}</p>
+                {% else %}
+                <div class="form-group">
                     <label for="{{ field.id_for_label }}" class="col-sm-2 control-label">{{ field.label }}</label>
                     <div class="col-sm-7">
                         {{ field }}
                     </div>
                 </div>
                 <p style="text-align:center">{{ field.errors.as_text }}</p>
+                {% endif %}
                 {% empty %}
                 <p>没有内容</p>
                 {% endfor %}

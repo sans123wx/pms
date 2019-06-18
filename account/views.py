@@ -2,6 +2,7 @@ from django.shortcuts import render , redirect
 from .forms import *
 from django.contrib import auth
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def login(request):
@@ -21,3 +22,8 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect(reverse('login'))
+
+@login_required
+def ajax_post_captcha(request):
+    form = CaptchaForm()
+    return render(request , 'account/captcha.html' , {'form':form})

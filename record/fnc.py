@@ -7,6 +7,8 @@ def add_to_16(text):
     return str.encode(text)
 
 def encrypt(text , key):
+    if type(text) == 'int':
+        text = str(text)
     aes = AES.new(add_to_16(key), AES.MODE_ECB)
     encrypted_text = str(base64.encodebytes(aes.encrypt(add_to_16(text))), encoding='utf8').replace('\n', '')
     return encrypted_text
