@@ -8,7 +8,7 @@ from django.conf import settings
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse , Http404
 from account.forms import CaptchaForm
-
+from ratelimit.decorators import ratelimit
 # Create your views here.
 
 @login_required
@@ -18,6 +18,8 @@ def view(request):
     context['records'] = records
     return render(request , 'record/view.html' , context)
 
+@ratelimit(key = 'ip' , rate = '6/h' , block = True)
+@ratelimit(key = 'post:key' , rate = '6/h' , block = True)
 @login_required
 @require_POST
 def view_detail(request):
@@ -36,6 +38,8 @@ def view_detail(request):
         context['info'] = '验证码错误'
     return render(request , 'record/success.html' , context)
 
+@ratelimit(key = 'ip' , rate = '6/h' , block = True)
+@ratelimit(key = 'post:key' , rate = '6/h' , block = True)
 @login_required
 def create_record(request):
     if request.method == 'POST':
@@ -58,6 +62,8 @@ def create_record(request):
     context['form'] = form
     return render(request , 'record/create_record.html' , context)
 
+@ratelimit(key = 'ip' , rate = '6/h' , block = True)
+@ratelimit(key = 'post:key' , rate = '6/h' , block = True)
 @login_required
 @require_POST
 def delete_record(request):
@@ -72,6 +78,8 @@ def delete_record(request):
         context['info'] = '密匙错误'
     return render(request , 'record/success.html' , context)
 
+@ratelimit(key = 'ip' , rate = '6/h' , block = True)
+@ratelimit(key = 'post:key' , rate = '6/h' , block = True)
 @login_required
 @require_POST
 def edit_record(request):

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'record',
     'account',
     'captcha',
+    'ratelimit',
 ]
 
 MIDDLEWARE = [
