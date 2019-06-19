@@ -6,8 +6,8 @@ from django.contrib.auth.decorators import login_required
 from ratelimit.decorators import ratelimit
 # Create your views here.
 
-@ratelimit(key = 'ip' , rate = '6/h' , block = True)
-@ratelimit(key = 'post:username' , rate = '6/h' , block = True)
+@ratelimit(key = 'ip' , rate = '15/30m' , block = True)
+@ratelimit(key = 'post:username' , rate = '15/30m' , method = 'post' , block = True)
 def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
