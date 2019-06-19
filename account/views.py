@@ -14,6 +14,7 @@ def login(request):
         if form.is_valid():
             user = form.cleaned_data['user']
             auth.login(request , user)
+            request.session.set_expiry(0)
             return redirect(reverse('view'))
 
     else:
